@@ -6,7 +6,10 @@ const cheerio = require('cheerio');
 const getStudentId = async (query) => {
   let studentId = ''
   await studentIdModule(query, request)
-  .then(res => studentId = res.body.response.headers.location.split('/')[5]) // 获取了studentId
+  .then(res => {
+    console.log(res.body.response.headers)
+    studentId = res.body.response.headers.location.split('/')[5]
+  }) // 获取了studentId
   .catch(err => console.log(err))
   return studentId
 }
@@ -19,11 +22,21 @@ module.exports.login = async (ctx, next) => {
   .then(async res => {
     let salt = res.body
     await login(ctx.request.query, request, res.headers['set-cookie'][0], salt)
-    .then(res => {
-      res.msg = res.body.result ? 'success' : 'error'
-      delete res.headers
-      delete res.body
-      ctx.response.body = res
+    .then(async res => {
+      if (res.body.result) {
+        res.result = true
+        res.msg = 'success'
+        res.studentId = await getStudentId(res)
+        delete res.headers
+        delete res.body
+        ctx.response.body = res
+      }
+      else {
+        ctx.response.body = {
+          result: false,
+          msg: res.body.message
+        }
+      }
     })
   })
   .catch(err => ctx.response.body = err)

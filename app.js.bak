@@ -19,7 +19,7 @@ app.on('error', (err, ctx) =>
   console.error('server error', err)
 );
 
-app.listen(process.env.PORT || 3001, () => console.log('listening...'))
+app.listen(3001, () => console.log('listening...'))
 
 
 

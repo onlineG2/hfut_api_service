@@ -2,7 +2,8 @@
 // 注：weekIndex不填的话返回整个学期的课
 
 module.exports = (query, request) => {
-  let { key, semestercode, weekIndex } = query
+  let { key, semestercode, weekIndex, userKey } = query
+  key = userKey ? userKey : key
   let data = {
     userKey: key,
     semestercode: semestercode,

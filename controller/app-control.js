@@ -7,13 +7,27 @@ module.exports.login = async (ctx, next) => {
   let question = require('../module/app/login-selfinfo')
   await question(ctx.request.query, request)
   .then(res => {
-    res.key = res.body.obj.userKey
-    res.selfinfo = res.body.obj.business_data
-    delete res.headers
-    delete res.body
-    ctx.response.body = res
+    if (res.body.obj) {
+      res.result = true
+      res.msg = 'success'
+      res.key = res.body.obj.userKey
+      res.selfinfo = res.body.obj.business_data
+      delete res.headers
+      delete res.body
+      delete res.status
+      ctx.response.body = res
+    }
+    else {
+      ctx.response.body = {
+        result: false,
+        msg: res.body.error
+      }
+    }
   })
-  .catch(err => ctx.response.body = err)
+  .catch(err => {
+    console.log('ERR：' + err)
+    ctx.response.body = err
+  })
 }
 
 // 获取成绩列表
