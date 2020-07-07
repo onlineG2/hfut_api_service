@@ -6,7 +6,7 @@
 
 ## HFUTspiderCore  API文档
 
----
+
 
 
 ### 登录并获取key
@@ -26,7 +26,6 @@ GET /login
 
 - App端教务
 | 参数名 | 值 |
-| --- | --- |
 | target | app |
 
 - Web端教务
