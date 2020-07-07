@@ -31,11 +31,13 @@ GET /login
 | target | app |
 
 - Web端教务
+
 | 参数名 | 值 |
 | --- | --- |
 | target | web |
 
 - WebVPN端教务
+
 | 参数名 | 值 |
 | --- | --- |
 | target | webvpn |
@@ -59,11 +61,13 @@ GET /schedule
 #### 平台支持
 
 - App端教务
+
 | 参数名 | 值 |
 | --- | --- |
 | semestercode | 2019-2020第二学期为：036 |
 
 - Web端教务/WebVPN端教务
+
 | 参数名 | 值 |
 | --- | --- |
 | semesterId | 2019-2020第二学期为：144 |
@@ -85,11 +89,13 @@ GET /scorelist
 #### 平台支持
 
 - App端教务
+
 | 参数名 | 值 |
 | --- | --- |
 | semestercode | 2019-2020第二学期为：036 |
 
 - Web端教务/WebVPN端教务
+
 | 参数名 | 值 |
 | --- | --- |
 | semesterId | 2019-2020第二学期为：144 |
