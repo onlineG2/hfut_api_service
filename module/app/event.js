@@ -1,7 +1,8 @@
 // 获取当天事件
 
 module.exports = (query, request) => {
-  let { key } = query
+  let { key, userKey } = query
+  key = userKey ? userKey : key
   let data = {
     userKey: key,
   }

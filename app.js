@@ -14,12 +14,13 @@ app.use(route.get('/selfinfo', controller.selfinfo))
 app.use(route.get('/program', controller.program))
 app.use(route.get('/lesson_survey', controller.lesson_survey))
 app.use(route.get('/course_select', controller.course_select))
+app.use(route.get('/vpn_ticket', controller.vpn_ticket))
 
 app.on('error', (err, ctx) =>
   console.error('server error', err)
 );
 
-app.listen(process.env.PORT || 3001, () => console.log('listening...'))
+app.listen(process.env.PORT || 3002, () => console.log('listening...'))
 
 
 

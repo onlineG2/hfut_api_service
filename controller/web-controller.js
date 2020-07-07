@@ -16,9 +16,9 @@ const getStudentId = async (query) => {
 
 // 登录比较麻烦，先login-salt再login
 module.exports.login = async (ctx, next) => {
-  let loginSession = require('../module/web/login-salt')
+  let loginSalt = require('../module/web/login-salt')
   let login = require('../module/web/login')
-  await loginSession({}, request)
+  await loginSalt({}, request)
   .then(async res => {
     let salt = res.body
     await login(ctx.request.query, request, res.headers['set-cookie'][0], salt)

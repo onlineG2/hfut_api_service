@@ -18,6 +18,7 @@ const createRequest = async ({method, url, data, cookies='', redirect=true, cont
     settings.params = data
   }
 
+  console.log(settings)
   await axios(settings)
   .then(res => {
     answer.body = res.data

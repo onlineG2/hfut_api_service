@@ -1,7 +1,8 @@
 // 获取某个教学班的同学列表
 
 module.exports = (query, request) => {
-  let { key, lessonCode, semestercode } = query
+  let { key, lessonCode, semestercode, userKey } = query
+  key = userKey ? userKey : key
   let data = {
     userKey: key,
     lessonCode: lessonCode,
