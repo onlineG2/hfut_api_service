@@ -8,9 +8,9 @@ https://www.yuque.com/player697/myblog/ridzuw
 
 
 #### 项目架构
-实现语言：JavaScript
-实现框架：[Koa](https://koa.bootcss.com/)
-参考项目：
+实现语言：JavaScript <br>
+实现框架：[Koa](https://koa.bootcss.com/) <br>
+参考项目： <br>
 
 - [koa官方推荐的 REST Api demo项目](https://github.com/hemanth/koa-rest)   项目结构参考这个
 - [基于Express的网易云API Server](https://github.com/Binaryify/NeteaseCloudMusicApi)   项目结构参考这个
@@ -26,7 +26,7 @@ https://www.yuque.com/player697/myblog/ridzuw
 #### 依赖的第三方npm包
 > 我就不加蓝链了，都是github上搜出来第一个
 
-**koa**基本框架
+**koa**基本框架 <br>
 **koa-route**实现路由
 **axios**进行http请求
 **nodemon**调试工具，修改代码自动重启项目
