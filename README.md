@@ -27,11 +27,11 @@ https://www.yuque.com/player697/myblog/ridzuw
 > 我就不加蓝链了，都是github上搜出来第一个
 
 **koa**基本框架 <br>
-**koa-route**实现路由
-**axios**进行http请求
-**nodemon**调试工具，修改代码自动重启项目
-**cheerio**  实现html解析
-**crypto-js**进行加密操作
+**koa-route**实现路由 <br>
+**axios**进行http请求 <br>
+**nodemon**调试工具，修改代码自动重启项目 <br>
+**cheerio**  实现html解析 <br>
+**crypto-js**进行加密操作 <br>
 
 
 #### 上手基础
