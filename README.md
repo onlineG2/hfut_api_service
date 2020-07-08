@@ -1,5 +1,5 @@
 
-# HFUTspiderCore
+# hfut_api_service 开发/使用文档
 
 基于koa的hfut教务api server。
 
