@@ -1,5 +1,7 @@
 const request = require('../util/request-web')
 const studentIdModule = require('../module/web-vpn/student-id')
+const cheerioModule = require('../util/cheerio-module')
+
 
 // 先获取一个wengine_ticket，然后对这个ticket进行验证
 // 注:App端只能通过登录获取个人信息
@@ -88,7 +90,7 @@ module.exports.scorelist = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
+  .then(res => ctx.response.body = cheerioModule.scorelist(res.body))
   .catch(err => ctx.response.body = err)
 }
 

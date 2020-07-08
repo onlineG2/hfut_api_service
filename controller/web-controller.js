@@ -1,6 +1,6 @@
 const request = require('../util/request-web')
 const studentIdModule = require('../module/web/student-id')
-const cheerio = require('cheerio');
+const cheerioModule = require('../util/cheerio-module')
 
 
 const getStudentId = async (query) => {
@@ -52,13 +52,13 @@ module.exports.schedule = async (ctx, next) => {
   .catch(err => ctx.response.body = err)
 }
 
-// 获取成绩列表
+// 获取成绩列表。返回为html
 module.exports.scorelist = async (ctx, next) => {
   let question = require('../module/web/score-list')
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
+  .then(res => ctx.response.body = cheerioModule.scorelist(res.body))
   .catch(err => ctx.response.body = err)
 }
 
