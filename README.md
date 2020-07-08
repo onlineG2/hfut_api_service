@@ -1,7 +1,4 @@
 
-
-
-
 # HFUTspiderCore
 
 基于koa的hfut教务api server。
@@ -9,7 +6,8 @@
 #### API文档
 https://www.yuque.com/player697/myblog/ridzuw
 
-#### 爬虫开发
+
+#### 项目架构
 实现语言：JavaScript
 实现框架：[Koa](https://koa.bootcss.com/)
 参考项目：
@@ -23,9 +21,6 @@ https://www.yuque.com/player697/myblog/ridzuw
 实现三套api方案，一套针对学校信息门户进入的Web教务系统的接口，一套针对移动端教务App接口，一套针对学校WebVpn的接口。
 做到在进行请求时，可以自定义指定一套接口进行数据获取。
 
-
-#### 开发环境
-node环境
 
 
 #### 依赖的第三方npm包
