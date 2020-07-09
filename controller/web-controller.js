@@ -62,13 +62,13 @@ module.exports.scorelist = async (ctx, next) => {
   .catch(err => ctx.response.body = err)
 }
 
-// 获取个人信息
+// 获取个人信息，返回为html
 module.exports.selfinfo = async (ctx, next) => {
   let question = require('../module/web/selfinfo')
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
+  .then(res => ctx.response.body = cheerioModule.selfinfo(res.body))
   .catch(err => ctx.response.body = err)
 }
 
@@ -78,11 +78,7 @@ module.exports.exam_arrange = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-  .then(res => {
-    const $ = cheerio.load(res.body);
-    console.log($('td').text())
-    ctx.response.body = $('td').text()
-  })
+  .then(res => ctx.response.body = res)
   .catch(err => ctx.response.body = err)
 }
 
