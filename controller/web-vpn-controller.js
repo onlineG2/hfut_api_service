@@ -30,13 +30,13 @@ module.exports.vpn_ticket = async (ctx, next) => {
   let ticket = await getVpnTicket(ctx)
   if (ticket) {
     return ctx.response.body = {
-      result: true,
+      success: true,
       msg: 'success',
       key: ticket,
     }
   }
   return ctx.response.body = {
-    result: false,
+    success: false,
     msg: 'fail',
     key: ticket,
   }
@@ -55,7 +55,7 @@ module.exports.login = async (ctx, next) => {
     await login(ctx.request.query, request, ticket, salt)
     .then(async res => {
       if (res.body.result) {
-        res.result = true
+        res.success = true
         res.msg = 'success'
         res.studentId = await getStudentId(res)
         delete res.headers
@@ -65,7 +65,7 @@ module.exports.login = async (ctx, next) => {
       }
       else {
         return ctx.response.body = {
-          result: false,
+          success: false,
           msg: res.body.message
         }
       }

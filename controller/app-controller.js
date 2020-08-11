@@ -8,7 +8,7 @@ module.exports.login = async (ctx, next) => {
   await question(ctx.request.query, request)
   .then(res => {
     if (res.body.obj) {
-      res.result = true
+      res.success = true
       res.msg = 'success'
       res.key = res.body.obj.userKey
       res.selfinfo = res.body.obj.business_data
@@ -19,7 +19,7 @@ module.exports.login = async (ctx, next) => {
     }
     else {
       ctx.response.body = {
-        result: false,
+        success: false,
         msg: res.body.error
       }
     }

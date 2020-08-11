@@ -24,7 +24,7 @@ module.exports.login = async (ctx, next) => {
     await login(ctx.request.query, request, res.headers['set-cookie'][0], salt)
     .then(async res => {
       if (res.body.result) {
-        res.result = true
+        res.success = true
         res.msg = 'success'
         res.studentId = await getStudentId(res)
         delete res.headers
@@ -32,8 +32,10 @@ module.exports.login = async (ctx, next) => {
         ctx.response.body = res
       }
       else {
+        console.log('请求失败！')
+        console.log(res)
         ctx.response.body = {
-          result: false,
+          success: false,
           msg: res.body.message
         }
       }

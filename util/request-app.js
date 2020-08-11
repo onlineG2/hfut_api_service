@@ -13,7 +13,7 @@ const createRequest = async (method, url, data) => {
     settings.data = data
   }
 
-  console.log(data)
+  // console.log(data)
 
   await axios(settings)
   .then(res => {
@@ -24,7 +24,7 @@ const createRequest = async (method, url, data) => {
   .catch(err =>{
     answer.body = err
   })
-
+  console.log(answer)
   return answer
 }
 
