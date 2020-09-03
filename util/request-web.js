@@ -32,10 +32,10 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
       if (cookies) {
         answer.key = cookies.split(';')[0].split('=')[1]
       }
+      console.log(res.status)
     })
     .catch(err => {
-      console.log('axios出错')
-      // console.log(err)
+      console.log(err.response.status)
       answer.body = err
     })
 

@@ -148,7 +148,7 @@ module.exports.selfinfo = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
+  .then(res => ctx.response.body = cheerioModule.selfinfo(res.body))
   .catch(err => ctx.response.body = err)
 }
 
