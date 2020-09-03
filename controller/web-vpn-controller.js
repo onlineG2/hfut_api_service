@@ -9,9 +9,11 @@ const getVpnTicket = async (ctx) => {
   let generateWengine = require('../module/web-vpn/generate-wengine')
   let vertifyWengine = require('../module/web-vpn/vertify-wengine')
   let ticket = ''
+  let wengine = ''
+  let error = ''
   await generateWengine(ctx.request.query, request)
   .then(async res => {
-    const wengine = res.headers['set-cookie'][0].split(';')[0]
+    wengine = res.headers['set-cookie'][0].split(';')[0]
     // console.log(wengine)
     await vertifyWengine(ctx.request.query, request, wengine)
     .then(res => {
@@ -21,13 +23,13 @@ const getVpnTicket = async (ctx) => {
     })
   })
   .catch(err => {
-    console.log('ERR：' + err)
-    ctx.response.body = err
+    // console.log('ERR：' + err)
+    error = JSON.stringify(err)
   })
-  return ticket
+  return { ticket, error, wengine }
 }
 module.exports.vpn_ticket = async (ctx, next) => {
-  let ticket = await getVpnTicket(ctx)
+  let { ticket, wengine, error } = await getVpnTicket(ctx)
   if (ticket) {
     return ctx.response.body = {
       success: true,
@@ -38,13 +40,15 @@ module.exports.vpn_ticket = async (ctx, next) => {
   return ctx.response.body = {
     success: false,
     msg: 'fail',
+    wengine: wengine,
+    error: error,
     key: ticket,
   }
 }
 
 // webvpn式登录
 module.exports.login = async (ctx, next) => {
-  let ticket = await getVpnTicket(ctx)
+  let { ticket } = await getVpnTicket(ctx)
   console.log('获取ticket：' + ticket)
   let loginSalt = require('../module/web-vpn/login-salt')
   let login = require('../module/web-vpn/login')
@@ -55,6 +59,8 @@ module.exports.login = async (ctx, next) => {
     await login(ctx.request.query, request, ticket, salt)
     .then(async res => {
       if (res.body.result) {
+        console.log('登陆正常')
+        console.log(res)
         res.success = true
         res.msg = 'success'
         res.studentId = await getStudentId(res)
@@ -66,7 +72,9 @@ module.exports.login = async (ctx, next) => {
       else {
         return ctx.response.body = {
           success: false,
-          msg: res.body.message
+          msg: res.body.message ? res.body.message : 'webvpn登录出错:' + JSON.stringify(res),
+          // ticket: ticket,
+          // salt: salt,
         }
       }
     })

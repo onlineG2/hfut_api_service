@@ -35,7 +35,7 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
     })
     .catch(err => {
       console.log('axios出错')
-      console.log(err)
+      // console.log(err)
       answer.body = err
     })
 

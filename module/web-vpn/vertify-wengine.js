@@ -1,6 +1,7 @@
 // web版获取个人信息
 const strEnc = require('../../util/enc-CAS')
 const fs = require('fs')
+const path = require('path')
 
 
 module.exports = (query, request, wengine) => {
@@ -27,7 +28,8 @@ module.exports = (query, request, wengine) => {
 // 返回一对key
 // 这里的路径可能会出错
 const getOneVpnKey = () => {
-  let data = fs.readFileSync('../data/vpnKey.csv')
+  // let data = fs.readFileSync('../data/vpnKey.csv')
+  let data = fs.readFileSync(path.join(__dirname, 'vpnKey.csv'))
 
   data = data.toString();
   let table = new Array();
