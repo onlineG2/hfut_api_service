@@ -76,7 +76,7 @@ module.exports.selfinfo = (html) => {
         break;
     }
   })
-  data.studentId = $('img').first().attr().src.split('/')[4]
+  data.studentId = $('img').first().attr().src.split('/')[6].split('?')[0]
   return data
 }
 
