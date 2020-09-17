@@ -1,11 +1,15 @@
 // web版获取课表
 
 module.exports = (query, request) => {
-  let { semesterId, dataId, key } = query
+  let { semesterId, dataId, key, campus } = query
+  let bizTypeId = '2'
+  if (campus === 2) {
+    bizTypeId = '23'
+  }
   let data = {
     semesterId: semesterId,
     dataId: dataId,
-    bizTypeId: '2',
+    bizTypeId,
     'vpn-12-o1-jxglstu.hfut.edu.cn': '',
   }
 

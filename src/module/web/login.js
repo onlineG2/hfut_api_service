@@ -7,7 +7,6 @@ module.exports = (query, request, cookies, salt) => {
   let data = {
     username: username,
     password: new String(CryptoJS.SHA1(salt + '-' + password)) + "",
-    // password: password,
     captcha: ''
   }
   

@@ -19,12 +19,10 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
     settings.params = data
   }
 
-  // console.log('哈------------')
   // console.log(settings)
+
   await axios(settings)
     .then(res => {
-      // console.log(res.status)
-      // console.log(res.headers)
       // console.log(res.data)
       answer.body = res.data
       answer.status = res.status

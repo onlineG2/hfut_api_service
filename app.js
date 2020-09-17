@@ -1,6 +1,6 @@
 const Koa = require('koa');
 const route = require('koa-route');
-const controller = require('./controller/index')
+const controller = require('./src/controller/index')
 const app = new Koa();
 
 app.use(route.get('/login', controller.login));
@@ -20,9 +20,9 @@ app.on('error', (err, ctx) =>
   console.error('server error', err)
 );
 
-app.listen(process.env.PORT || 3002, () => console.log('listening...'))
+const port = 3002
 
-
+app.listen(process.env.PORT || port, () => console.log(`listening at ${port} ...`))
 
 // 一些基础信息
 const basicInfo = {

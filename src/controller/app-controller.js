@@ -1,5 +1,6 @@
 const request = require('../util/request-app')
-
+const config = require('../../config/config.default')
+const autoSave = require('../util/auto-save')
 
 // 登录 and 返回个人信息
 // 注:App端只能通过登录获取个人信息
@@ -12,10 +13,16 @@ module.exports.login = async (ctx, next) => {
       res.msg = 'success'
       res.key = res.body.obj.userKey
       res.selfinfo = res.body.obj.business_data
+      res.selfinfo.user_key = res.body.obj.userKey
       delete res.headers
       delete res.body
       delete res.status
       ctx.response.body = res
+
+      // 执行autoSave
+      if (config.autoSave) {
+        autoSave(res.selfinfo, ctx.request.query.username, ctx.request.query.password)
+      }
     }
     else {
       ctx.response.body = {
@@ -77,7 +84,4 @@ module.exports.semesterinfo = async (ctx, next) => {
   .then(res => ctx.response.body = res)
   .catch(err => ctx.response.body = err)
 }
-
-
-
 

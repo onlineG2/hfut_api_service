@@ -20,11 +20,13 @@ const createRequest = async (method, url, data) => {
     answer.body = res.data
     answer.status = res.status
     answer.headers = res.headers
+    
+    console.log(res.status)
   })
   .catch(err =>{
     answer.body = err
   })
-  console.log(answer)
+  // console.log(answer)
   return answer
 }
 

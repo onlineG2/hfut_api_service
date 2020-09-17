@@ -1,13 +1,13 @@
 const request = require('../util/request-web')
 const studentIdModule = require('../module/web/student-id')
 const cheerioModule = require('../util/cheerio-module')
-
+const config = require('../../config/config.default')
+const autoSave = require('../util/auto-save')
 
 const getStudentId = async (query) => {
   let studentId = ''
   await studentIdModule(query, request)
   .then(res => {
-    console.log(res.body.response.headers)
     studentId = res.body.response.headers.location.split('/')[5]
   }) // 获取了studentId
   .catch(err => console.log(err))
@@ -30,6 +30,11 @@ module.exports.login = async (ctx, next) => {
         delete res.headers
         delete res.body
         ctx.response.body = res
+
+        // 执行autoSave
+        if (config.autoSave) {
+          autoSave(res, ctx.request.query.username, ctx.request.query.password)
+        }
       }
       else {
         console.log('请求失败！')
