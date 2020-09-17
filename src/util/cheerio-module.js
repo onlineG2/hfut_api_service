@@ -80,3 +80,8 @@ module.exports.selfinfo = (html) => {
   return data
 }
 
+module.exports.getPreppyStuId = (html) => {
+  const $ = cheerio.load(html)
+  const studentId = $('button')[1].attribs.value
+  return studentId
+}

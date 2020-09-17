@@ -23,7 +23,7 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
 
   await axios(settings)
     .then(res => {
-      // console.log(res.data)
+      // console.log(res)
       answer.body = res.data
       answer.status = res.status
       answer.headers = res.headers
@@ -33,7 +33,7 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
       console.log(res.status)
     })
     .catch(err => {
-      console.log(err.response.status)
+      console.log(err)
       answer.body = err
     })
 
