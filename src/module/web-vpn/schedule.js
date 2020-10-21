@@ -3,7 +3,7 @@
 module.exports = (query, request) => {
   let { semesterId, dataId, key, campus } = query
   let bizTypeId = '2'
-  if (campus === 2) {
+  if (String(campus) === '2') {
     bizTypeId = '23'
   }
   let data = {

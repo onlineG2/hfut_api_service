@@ -14,6 +14,7 @@ const createRequest = async (method, url, data) => {
   }
 
   // console.log(data)
+  console.log(settings)
 
   await axios(settings)
   .then(res => {

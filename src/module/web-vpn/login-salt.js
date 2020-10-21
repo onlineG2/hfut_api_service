@@ -9,7 +9,7 @@ module.exports = (ticket, request) => {
     method: 'get',
     url: 'https://vpn.hfut.edu.cn/http/77726476706e69737468656265737421faef469034247d1e760e9cb8d6502720ede479/eams5-student/login-salt',
     data: data,
-    cookies: 'wengine_vpn_ticketvpn_hfut_edu_cn=' + ticket,
+    cookies: 'SRVID=s110; remember_token=; show_vpn=1; refresh=1; wengine_vpn_ticketvpn_hfut_edu_cn=' + ticket,
   })
 }
 

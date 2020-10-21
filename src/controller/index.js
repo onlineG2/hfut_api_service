@@ -7,6 +7,7 @@ module.exports.login = async (ctx, next) => {
   switch (ctx.request.query.target) {
     case 'web':
       await webController.login(ctx, next); break;
+      // await webVpnController.login(ctx, next); break;
     case 'webvpn':
       await webVpnController.login(ctx, next); break;
     default:
@@ -14,16 +15,43 @@ module.exports.login = async (ctx, next) => {
   }
 }
 
+module.exports.schedule = async (ctx, next) => {
+  switch (ctx.request.query.target) {
+    case 'web':
+      await webController.schedule(ctx, next); break;
+      // await webVpnController.schedule(ctx, next); break;
+    case 'webvpn':
+      await webVpnController.schedule(ctx, next); break;
+    default:
+      await appController.schedule(ctx, next);
+  }
+}
+
+module.exports.exam_arrange = async (ctx, next) => {
+  switch (ctx.request.query.target) {
+    case 'web':
+      await webController.exam_arrange(ctx, next); break;
+      // await webVpnController.exam_arrange(ctx, next); break;
+    case 'webvpn':
+      await webVpnController.exam_arrange(ctx, next); break;
+    default:
+      await appController.exam_arrange(ctx, next);
+  }
+}
+
 module.exports.scorelist = async (ctx, next) => {
   switch (ctx.request.query.target) {
     case 'web':
       await webController.scorelist(ctx, next); break;
+      // await webVpnController.scorelist(ctx, next); break;
     case 'webvpn':
       await webVpnController.scorelist(ctx, next); break;
     default:
       await appController.scorelist(ctx, next);
   }
 }
+
+// 以上vpn紧急模式要改
 
 module.exports.event = async (ctx, next) => {
   await appController.event(ctx, next)  // 只支持app端
@@ -38,28 +66,6 @@ module.exports.classlist = async (ctx, next) => {
   }
 }
 
-module.exports.schedule = async (ctx, next) => {
-  switch (ctx.request.query.target) {
-    case 'web':
-      await webController.schedule(ctx, next); break;
-    case 'webvpn':
-      await webVpnController.schedule(ctx, next); break;
-    default:
-      await appController.schedule(ctx, next);
-  }
-}
-
-module.exports.exam_arrange = async (ctx, next) => {
-  switch (ctx.request.query.target) {
-    case 'web':
-      await webController.exam_arrange(ctx, next); break;
-    case 'webvpn':
-      await webVpnController.exam_arrange(ctx, next); break;
-    default:
-      await appController.exam_arrange(ctx, next);
-  }
-}
-
 module.exports.semesterinfo = async (ctx, next) => {
   await appController.semesterinfo(ctx, next)  // 暂时只支持app端
 }
@@ -69,7 +75,8 @@ module.exports.selfinfo = async (ctx, next) => {
     case 'webvpn':
       await webVpnController.selfinfo(ctx, next); break;
     default:
-      await webController.selfinfo(ctx, next);
+      // await webController.selfinfo(ctx, next);
+      await webVpnController.selfinfo(ctx, next); break;
   }
 }
 
@@ -102,6 +109,26 @@ module.exports.course_select = async (ctx, next) => {
 
 module.exports.vpn_ticket = async (ctx, next) => {
   await webVpnController.vpn_ticket(ctx, next);
+}
+
+
+// 图书借阅部分
+module.exports.book_search = async (ctx, next) => {
+  switch (ctx.request.query.target) {
+    case 'webvpn':
+      await webVpnController.book_search(ctx, next); break;
+    default:
+      await webController.book_search(ctx, next);
+  }
+}
+
+module.exports.book_status = async (ctx, next) => {
+  switch (ctx.request.query.target) {
+    case 'webvpn':
+      await webVpnController.book_status(ctx, next); break;
+    default:
+      await webController.book_status(ctx, next);
+  }
 }
 
 

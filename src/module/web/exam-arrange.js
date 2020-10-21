@@ -10,7 +10,7 @@ module.exports = (query, request) => {
     method: 'get',
     url: 'http://jxglstu.hfut.edu.cn/eams5-student/for-std/exam-arrange/info/' + dataId,
     data: data,
-    cookies: cookies,
+    cookies: 'SRVID=s110; ' + cookies,
   })
 }
 

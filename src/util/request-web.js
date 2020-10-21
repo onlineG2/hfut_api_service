@@ -23,17 +23,22 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
 
   await axios(settings)
     .then(res => {
-      // console.log(res)
+      // console.log(res.headers)
       answer.body = res.data
       answer.status = res.status
       answer.headers = res.headers
-      if (cookies) {
-        answer.key = cookies.split(';')[0].split('=')[1]
+      if (cookies.indexOf('SESSION') !== -1) {
+        answer.key = cookies.split('SESSION=')[1].split(';')[0]
+      } else if (cookies.indexOf('wengine_vpn_ticketvpn_hfut_edu_cn') !== -1) {
+        answer.key = cookies.split('wengine_vpn_ticketvpn_hfut_edu_cn=')[1].split(';')[0]
       }
       console.log(res.status)
     })
     .catch(err => {
-      console.log(err)
+      if (err.response.status !== 302) {
+        console.log('出错：' + url)
+        // console.log(err)
+      }
       answer.body = err
     })
 

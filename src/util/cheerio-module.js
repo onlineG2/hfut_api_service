@@ -71,13 +71,57 @@ module.exports.selfinfo = (html) => {
         data.class = $(this).text(); break;
       case 9:
         data.campus = $(this).text(); break;
-    
+
       default:
         break;
     }
   })
   data.studentId = $('img').first().attr().src.split('/')[6].split('?')[0]
   return data
+}
+
+
+// 解析web端考试安排
+module.exports.examArrange = (html) => {
+  const examInfo = []
+  const $ = cheerio.load(html)
+  $('tbody').find('tr').each(function (examIndex, examEle) {
+    examInfo.push({
+      name: $(examEle).find('td')[0].children[0].data,
+      timeText: $(examEle).find('td')[1].children[0].data,
+      room: $(examEle).find('td')[2].children[0].data,
+    })
+  })
+
+  return examInfo
+}
+
+
+// 解析单个图书的借阅状态
+module.exports.bookStatus = (html) => {
+  const statusInfo = []
+  const $ = cheerio.load(html)
+  $('tr').each(function (itemIndex, itemEle) {
+    if (itemIndex === 0) {
+      return
+    }
+    let status = $(itemEle).find('td')[4].children[0].data
+    if (!status) {
+      try {
+        status = $(itemEle).find('td')[4].children[0].children[0].data
+      } catch (error) {
+        status = ''
+      }
+    }
+    statusInfo.push({
+      selectNumber: $(itemEle).find('td')[0].children[0].data,
+      code: $(itemEle).find('td')[1].children[0].data,
+      location: $(itemEle).find('td')[3].attribs.title,
+      status,
+    })
+  })
+
+  return statusInfo
 }
 
 module.exports.getPreppyStuId = (html) => {
