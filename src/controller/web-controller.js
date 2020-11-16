@@ -169,28 +169,18 @@ const getStudentId = async (query) => {
 }
 
 
-
-// 图书馆馆藏检索
-module.exports.book_search = async (ctx, next) => {
-  let question = require('../module/web/book-search')
+// 课程/教师检索
+module.exports.course_search = async (ctx, next) => {
+  let question = require('../module/web/course-search')
+  let studentId = await getStudentId(ctx.request.query)
+  ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
     .then(res => {
-      const { status, body: { total, content } } = res
       ctx.response.body = {
-        status,
         success: true,
-        total,
         pageCount: parseInt(ctx.request.query.pageCount),
-        content,
+        ...res.body,
       }
     })
-    .catch(err => ctx.response.body = err)
-}
-
-// 某个图书的借阅状态，需要html解析
-module.exports.book_status = async (ctx, next) => {
-  let question = require('../module/web/book-status')
-  await question(ctx.request.query, request)
-    .then(res => ctx.response.body = cheerioModule.bookStatus(res.body))
     .catch(err => ctx.response.body = err)
 }

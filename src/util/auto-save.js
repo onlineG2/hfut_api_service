@@ -13,7 +13,6 @@ async function autoSave(userInfo, username, password) {
       userInfo.gender = 2;
       break;
     default:
-      userInfo.gender = 0;
       break;
   }
   userInfo.student_id = userInfo.studentId
@@ -28,6 +27,8 @@ async function autoSave(userInfo, username, password) {
       user_code: userInfo.user_code,
     },
   });
+
+  // users.close()
 }
 
 module.exports = autoSave

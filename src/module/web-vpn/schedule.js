@@ -21,4 +21,4 @@ module.exports = (query, request) => {
   })
 }
 
-
+// https://webvpn.hfut.edu.cn/http/77726476706e69737468656265737421faef469034247d1e760e9cb8d6502720ede479/eams5-student/for-std/course-table/semester/94/print-data/98912?vpn-12-o1-jxglstu.hfut.edu.cn

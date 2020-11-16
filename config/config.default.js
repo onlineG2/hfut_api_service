@@ -1,5 +1,5 @@
 const config = {
-  autoSave: true,
+  autoSave: false,
 }
 
 module.exports = config

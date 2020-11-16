@@ -254,7 +254,7 @@ module.exports.book_search = async (ctx, next) => {
         success: true,
         total,
         pageCount: parseInt(ctx.request.query.pageCount),
-        content,
+        content: content || [],
       }
     })
     .catch(err => ctx.response.body = err)
@@ -264,6 +264,47 @@ module.exports.book_search = async (ctx, next) => {
 module.exports.book_status = async (ctx, next) => {
   let question = require('../module/web-vpn/book-status')
   await question(ctx.request.query, request)
-    .then(res => ctx.response.body = cheerioModule.bookStatus(res.body))
+    .then(res => ctx.response.body = {
+      success: true,
+      bookStatus: cheerioModule.bookStatus(res.body),
+    })
+    .catch(err => ctx.response.body = { success: false, err })
+}
+
+// 某个图书的详细信息，需要html解析
+module.exports.book_info = async (ctx, next) => {
+  let question = require('../module/web-vpn/book-info')
+  await question(ctx.request.query, request)
+    .then(res => ctx.response.body = {
+      success: true,
+      bookInfo: cheerioModule.bookInfo(res.body),
+    })
+    .catch(err => ctx.response.body = { success: false, err })
+}
+
+// 某个图书搜索热度榜单，需要html解析
+module.exports.book_ranking = async (ctx, next) => {
+  let question = require('../module/web-vpn/book-ranking')
+  await question(ctx.request.query, request)
+    .then(res => ctx.response.body = {
+      success: true,
+      bookList: cheerioModule.bookRanking(res.body),
+    })
+    .catch(err => ctx.response.body = { success: false, err })
+}
+
+// 课程/教师检索
+module.exports.course_search = async (ctx, next) => {
+  let question = require('../module/web-vpn/course-search')
+  let studentId = await getStudentId(ctx.request.query)
+  ctx.request.query.dataId = studentId
+  await question(ctx.request.query, request)
+    .then(res => {
+      ctx.response.body = {
+        success: true,
+        pageCount: parseInt(ctx.request.query.pageCount),
+        ...res.body,
+      }
+    })
     .catch(err => ctx.response.body = err)
 }

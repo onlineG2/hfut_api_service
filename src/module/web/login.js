@@ -14,7 +14,7 @@ module.exports = (query, request, cookies, salt) => {
     method: 'post',
     url: 'http://jxglstu.hfut.edu.cn/eams5-student/login',
     data: data,
-    cookies: 'SRVID=s110; ' + cookies,
+    cookies: 'SRVID=s114; ' + cookies,
   })
 }
 

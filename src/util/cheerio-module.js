@@ -3,7 +3,7 @@ const cheerio = require('cheerio')
 
 // 解析web端考试成绩
 module.exports.scorelist = (html) => {
-  const $ = cheerio.load(html)
+  const $ = cheerio.load(html, { decodeEntities: false })
   let data = []
   $('.container-fluid').find('.row').each(function () {
     let oneSemester = {}
@@ -28,7 +28,10 @@ module.exports.scorelist = (html) => {
             case 5:
               oneLesson.grade = $(this).text(); break;
             case 6:
-              oneLesson.gradeDetail = $(this).text(); break;
+              let gradeDetail = ''
+              $(this).html().split('<br>').map(ele => gradeDetail += ele + ';')
+
+              oneLesson.gradeDetail = gradeDetail; break;
             default:
               break;
           }
@@ -39,7 +42,7 @@ module.exports.scorelist = (html) => {
     oneSemester.scorelist = scorelist
     data.push(oneSemester)
   })
-  return data
+  return data.reverse()
 }
 
 
@@ -122,6 +125,49 @@ module.exports.bookStatus = (html) => {
   })
 
   return statusInfo
+}
+
+// 解析单个图书的详细信息
+module.exports.bookInfo = (html) => {
+  const bookInfo = {}
+  const $ = cheerio.load(html)
+  $('dl').each(function (itemIndex, itemEle) {
+    switch ($(itemEle).children('dt').text()) {
+      case '版本说明:':
+        bookInfo.edition = $(itemEle).children('dd').text()
+        break;
+      case '出版发行项:':
+        bookInfo.publish = $(itemEle).children('dd').text()
+        break;
+      case '载体形态项:':
+        bookInfo.physics = $(itemEle).children('dd').text()
+        break;
+      case '提要文摘附注:':
+        bookInfo.digest = $(itemEle).children('dd').text()
+        break;
+      case 'ISBN及定价:':
+        bookInfo.price = $(itemEle).children('dd').text().split('/')[1]
+        break;
+      case '学科主题:':
+        bookInfo.subject = $(itemEle).children('dd').text()
+        break;
+
+      default:
+        break;
+    }
+  })
+  return bookInfo
+}
+
+// 解析图书热度榜单
+module.exports.bookRanking = (html) => {
+  let bookRanking = []
+  const $ = cheerio.load(html)
+  $('table').children().each(function (itemIndex, itemEle) {
+    const rankingText = $(itemEle).children().children().text()
+    bookRanking = rankingText.split('  ')
+  })
+  return bookRanking
 }
 
 module.exports.getPreppyStuId = (html) => {

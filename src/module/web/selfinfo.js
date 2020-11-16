@@ -9,7 +9,7 @@ module.exports = (query, request) => {
     method: 'get',
     url: 'http://jxglstu.hfut.edu.cn/eams5-student/for-std/student-info/info/' + dataId,
     data: data,
-    cookies: 'SRVID=s110; ' + cookies,
+    cookies: 'SRVID=s114; ' + cookies,
   })
 }
 

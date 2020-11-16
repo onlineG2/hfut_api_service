@@ -21,4 +21,4 @@ module.exports = (query, request) => {
   })
 }
 
-
+// http://jxglstu.hfut.edu.cn/eams5-student/for-std/course-table/semester/94/print-data/98912?vpn-12-o1-jxglstu.hfut.edu.cn
