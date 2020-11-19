@@ -5,11 +5,8 @@ const sqlConfig = {
   
   // user: 'root',
   // password: 'microonline697',
-  // host: 'rm-bp1xh78n7jgm1kks3125010.mysql.rds.aliyuncs.com',  // 内网地址
+  // host: 'rm-bp1xh78n7jgm1kks3125010.mysql.rds.aliyuncs.com',
   
-  user: 'p697',
-  password: '13991986996@@Ab',
-  host: 'rm-bp1xh78n7jgm1kks3io.mysql.rds.aliyuncs.com',  // 外网地址
 };
 
 const sequelize = new Sequelize(sqlConfig.database, sqlConfig.user, sqlConfig.password, {
