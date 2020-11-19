@@ -9,9 +9,11 @@ module.exports = (query, request) => {
     semestercode: semestercode,
     projectId: '2'
   }
-  return request(
-    'post', 'http://jxglstu.hfut.edu.cn:7070/appservice/home/schedule/getClassList.action', data
-  )
+  return request({
+    method: 'post',
+    url: 'http://jxglstu.hfut.edu.cn:7070/appservice/home/schedule/getClassList.action',
+    data
+  })
 }
 
 

@@ -6,7 +6,7 @@ module.exports = (query, request) => {
   let data = {
     semester: semesterId,
   }
-  let cookies = 'SESSION=' + key
+  let cookies = 'SRVID=s110; path=/; SESSION=' + key
 
   return request({
     method: 'get',

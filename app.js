@@ -37,7 +37,7 @@ app.listen(process.env.PORT || port, () => console.log(`listening at ${port} ...
 
 // 一些基础信息
 const basicInfo = {
-  currentWebSemesterId : '94'
+  currentWebSemesterId : '114'
 }
 module.exports.basicInfo = basicInfo
 

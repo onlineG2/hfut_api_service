@@ -158,7 +158,21 @@ module.exports.scorelist = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-    .then(res => ctx.response.body = cheerioModule.scorelist(res.body))
+    .then(res => {
+      if (res.headers['set-cookie']) {
+        ctx.response.body = {
+          success: false,
+          msg: 'key失效',
+          scorelist: [],
+        }
+      } else {
+        ctx.response.body = {
+          success: true,
+          msg: '成功',
+          scorelist: cheerioModule.scorelist(res.body),
+        }
+      }
+    })
     .catch(err => ctx.response.body = err)
 }
 
@@ -300,10 +314,25 @@ module.exports.course_search = async (ctx, next) => {
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
     .then(res => {
+      // if (res.headers['set-cookie']) {
+      //   ctx.response.body = {
+      //     success: false,
+      //     msg: 'key失效',
+      //     data: null,
+      //   }
+      // } else {
+      //   ctx.response.body = {
+      //     success: true,
+      //     msg: '成功',
+      //     data: {
+      //       ...res.body,
+      //     },
+      //   }
+      // }
       ctx.response.body = {
         success: true,
-        pageCount: parseInt(ctx.request.query.pageCount),
-        ...res.body,
+        msg: '成功',
+        ...res,
       }
     })
     .catch(err => ctx.response.body = err)

@@ -6,9 +6,11 @@ module.exports = (query, request) => {
   let data = {
     userKey: key,
   }
-  return request(
-    'post', 'http://jxglstu.hfut.edu.cn:7070/appservice/home/event/getEvent.action', data
-  )
+  return request({
+    method: 'post',
+    url: 'http://jxglstu.hfut.edu.cn:7070/appservice/home/event/getEvent.action',
+    data
+  })
 }
 
 

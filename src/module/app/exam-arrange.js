@@ -9,9 +9,11 @@ module.exports = (query, request) => {
     projectId: '2',
     identity: '0'
   }
-  return request(
-    'post', 'http://jxglstu.hfut.edu.cn:7070/appservice/home/course/getExamArrangement.action', data
-  )
+  return request({
+    method: 'post',
+    url: 'http://jxglstu.hfut.edu.cn:7070/appservice/home/course/getExamArrangement.action',
+    data
+  })
 }
 
 

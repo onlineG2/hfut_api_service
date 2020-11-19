@@ -8,9 +8,11 @@ module.exports = (query, request) => {
     password: Buffer.from(password).toString('base64'),
     identity: '0'
   }
-  return request(
-    'post', 'http://jxglstu.hfut.edu.cn:7070/appservice/home/appLogin/login.action', data
-  )
+  return request({
+    method: 'post',
+    url: 'http://jxglstu.hfut.edu.cn:7070/appservice/home/appLogin/login.action',
+    data
+  })
 }
 
 

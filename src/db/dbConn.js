@@ -2,10 +2,11 @@ const Sequelize = require('sequelize');
 // 数据库配置文件
 const sqlConfig = {
   database: 'online_user_default',
-
-  // user: 'root',
-  // password: 'microonline697',
-  // host: 'rm-bp1xh78n7jgm1kks3125010.mysql.rds.aliyuncs.com',  // 内网地址
+  
+  user: 'root',
+  password: 'microonline697',
+  host: 'rm-bp1xh78n7jgm1kks3125010.mysql.rds.aliyuncs.com',  // 内网地址
+  
   
 };
 

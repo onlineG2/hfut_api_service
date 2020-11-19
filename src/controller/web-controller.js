@@ -87,7 +87,21 @@ module.exports.scorelist = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-    .then(res => ctx.response.body = cheerioModule.scorelist(res.body))
+  .then(res => {
+    if (res.body.indexOf('登入页面') !== -1) {
+      return ctx.response.body = {
+        success: false,
+        msg: 'key失效',
+        scorelist: [],
+      }
+    } else {
+      return ctx.response.body = {
+        success: true,
+        msg: '成功',
+        scorelist: cheerioModule.scorelist(res.body),
+      }
+    }
+  })
     .catch(err => ctx.response.body = err)
 }
 
@@ -175,12 +189,22 @@ module.exports.course_search = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-    .then(res => {
-      ctx.response.body = {
-        success: true,
-        pageCount: parseInt(ctx.request.query.pageCount),
-        ...res.body,
+  .then(res => {
+    if (typeof res.body === 'string') {
+      return ctx.response.body = {
+        success: false,
+        msg: 'key失效',
+        data: null,
       }
-    })
+    } else {
+      return ctx.response.body = {
+        success: true,
+        msg: '成功',
+        data: {
+          ...res.body,
+        },
+      }
+    }
+  })
     .catch(err => ctx.response.body = err)
 }

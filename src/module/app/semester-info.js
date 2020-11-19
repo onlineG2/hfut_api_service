@@ -7,9 +7,11 @@ module.exports = (query, request) => {
     userKey: key,
     projectId: '2'
   }
-  return request(
-    'post', 'http://jxglstu.hfut.edu.cn:7070/appservice/home/publicdata/getSemesterAndWeekList.action', data
-  )
+  return request({
+    method: 'post',
+    url: 'http://jxglstu.hfut.edu.cn:7070/appservice/home/publicdata/getSemesterAndWeekList.action',
+    data
+  })
 }
 
 
