@@ -12,6 +12,11 @@ module.exports.login = async (ctx, next) => {
         await webVpnController.login(ctx, next); break;
       }
       await webController.login(ctx, next); break;
+    case 'app':
+      if (config.emergency) {
+        await appVpnController.login(ctx, next); break;
+      }
+      await appController.login(ctx, next); break;
 
     case 'webvpn':
       await webVpnController.login(ctx, next); break;
@@ -30,6 +35,11 @@ module.exports.schedule = async (ctx, next) => {
         await webVpnController.schedule(ctx, next); break;
       }
       await webController.schedule(ctx, next); break;
+    case 'app':
+      if (config.emergency) {
+        await appVpnController.schedule(ctx, next); break;
+      }
+      await appController.schedule(ctx, next); break;
 
     case 'webvpn':
       await webVpnController.schedule(ctx, next); break;
@@ -48,6 +58,11 @@ module.exports.exam_arrange = async (ctx, next) => {
         await webVpnController.exam_arrange(ctx, next); break;
       }
       await webController.exam_arrange(ctx, next); break;
+    case 'app':
+      if (config.emergency) {
+        await appVpnController.exam_arrange(ctx, next); break;
+      }
+      await appController.exam_arrange(ctx, next); break;
 
     case 'webvpn':
       await webVpnController.exam_arrange(ctx, next); break;
@@ -66,6 +81,11 @@ module.exports.scorelist = async (ctx, next) => {
         await webVpnController.scorelist(ctx, next); break;
       }
       await webController.scorelist(ctx, next); break;
+    case 'app':
+      if (config.emergency) {
+        await appVpnController.scorelist(ctx, next); break;
+      }
+      await appController.scorelist(ctx, next); break;
       
     case 'webvpn':
       await webVpnController.scorelist(ctx, next); break;
@@ -78,17 +98,27 @@ module.exports.scorelist = async (ctx, next) => {
 
 // 全校开课检索，仅web
 module.exports.course_search = async (ctx, next) => {
+  if (config.emergency) {
+    return await webVpnController.course_search(ctx, next);
+  }
   switch (ctx.request.query.target) {
-    case 'web':
-      if (config.emergency) {
-        await webVpnController.course_search(ctx, next); break;
-      }
-      await webController.course_search(ctx, next); break;
-      
     case 'webvpn':
       await webVpnController.course_search(ctx, next); break;
     default:
       await webController.course_search(ctx, next);
+  }
+}
+
+// 班级同学列表，仅app
+module.exports.classlist = async (ctx, next) => {
+  if (config.emergency) {
+    return await webVpnController.course_search(ctx, next);
+  }
+  switch (ctx.request.query.target) {
+    case 'appvpn':
+      await appVpnController.classlist(ctx, next); break;
+    default:
+      await appController.classlist(ctx, next);
   }
 }
 
@@ -103,16 +133,6 @@ module.exports.event = async (ctx, next) => {
       await appVpnController.event(ctx, next); break;
     default:
       await appController.event(ctx, next);
-  }
-}
-
-// 班级同学列表，仅app
-module.exports.classlist = async (ctx, next) => {
-  switch (ctx.request.query.target) {
-    case 'appvpn':
-      await appVpnController.classlist(ctx, next); break;
-    default:
-      await appController.classlist(ctx, next);
   }
 }
 
