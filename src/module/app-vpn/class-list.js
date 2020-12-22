@@ -1,14 +1,20 @@
 // 获取某个教学班的同学列表
 
 module.exports = (query, request) => {
-  let { key, lessonCode, semestercode, userKey, vpnTicket } = query
+  let { key, campus, lessonCode, semestercode, userKey, vpnTicket } = query
   key = userKey ? userKey : key
+  let bizTypeId = '2'
+  if (String(campus) === '2') {
+    bizTypeId = '23'
+  }
+
   let data = {
     userKey: key,
     lessonCode: lessonCode,
     semestercode: semestercode,
-    projectId: '2'
+    projectId: bizTypeId,
   }
+
   return request({
     method: 'post', 
     url: 'https://vpn.hfut.edu.cn/http/77726476706e69737468656265737421faef469034247d1e760e9cb8d6502720ede4792c7ce9797e/appservice/home/schedule/getClassList.action', 

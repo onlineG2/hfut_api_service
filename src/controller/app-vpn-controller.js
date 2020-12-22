@@ -7,81 +7,96 @@ const autoSave = require('../util/auto-save')
 module.exports.login = async (ctx, next) => {
   let question = require('../module/app-vpn/login-selfinfo')
   await question(ctx.request.query, request)
-  .then(res => {
-    if (res.body.obj) {
-      res.success = true
-      res.msg = 'success'
-      res.key = res.body.obj.userKey
-      res.selfinfo = res.body.obj.business_data
-      res.selfinfo.user_key = res.body.obj.userKey
-      delete res.headers
-      delete res.body
-      delete res.status
-      ctx.response.body = res
+    .then(res => {
+      if (res.body.obj) {
+        res.success = true
+        res.msg = 'success'
+        res.key = res.body.obj.userKey
+        res.selfinfo = res.body.obj.business_data
+        res.selfinfo.user_key = res.body.obj.userKey
+        delete res.headers
+        delete res.body
+        delete res.status
+        ctx.response.body = res
 
-      // 执行autoSave
-      if (config.autoSave) {
-        autoSave(res.selfinfo, ctx.request.query.username, ctx.request.query.password)
+        // 执行autoSave
+        if (config.autoSave) {
+          autoSave(res.selfinfo, ctx.request.query.username, ctx.request.query.password)
+        }
       }
-    }
-    else {
-      ctx.response.body = {
-        success: false,
-        msg: res.body.error
+      else {
+        ctx.response.body = {
+          success: false,
+          msg: 'key过期或其他错误'
+        }
       }
-    }
-  })
-  .catch(err => {
-    console.log('ERR：' + err)
-    ctx.response.body = err
-  })
+    })
+    .catch(err => {
+      console.log('ERR：' + err)
+      ctx.response.body = err
+    })
 }
 
 // 获取成绩列表
 module.exports.scorelist = async (ctx, next) => {
   let question = require('../module/app-vpn/score-list')
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
-  .catch(err => ctx.response.body = err)
+    .then(res => ctx.response.body = res)
+    .catch(err => ctx.response.body = err)
 }
 
 // 获取当天事件
 module.exports.event = async (ctx, next) => {
   let question = require('../module/app-vpn/event')
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
-  .catch(err => ctx.response.body = err)
+    .then(res => ctx.response.body = res)
+    .catch(err => ctx.response.body = err)
 }
 
 // 获取某门课同学列表
 module.exports.classlist = async (ctx, next) => {
   let question = require('../module/app-vpn/class-list')
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
-  .catch(err => ctx.response.body = err)
+    .then(res => {
+      const { status, body } = res
+      if (typeof body === 'string') {
+        return ctx.response.body = {
+          success: false,
+          msg: 'key过期',
+          classlist: [],
+        }
+      }
+      // key正常
+      const { obj: { business_data: classlist } } = body
+      return ctx.response.body = {
+        success: true,
+        classlist,
+      }
+    })
+    .catch(err => ctx.response.body = err)
 }
 
 // 获取课表
 module.exports.schedule = async (ctx, next) => {
   let question = require('../module/app-vpn/schedule')
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
-  .catch(err => ctx.response.body = err)
+    .then(res => ctx.response.body = res)
+    .catch(err => ctx.response.body = err)
 }
 
 // 获取考试安排
 module.exports.exam_arrange = async (ctx, next) => {
   let question = require('../module/app-vpn/exam-arrange')
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
-  .catch(err => ctx.response.body = err)
+    .then(res => ctx.response.body = res)
+    .catch(err => ctx.response.body = err)
 }
 
 // 获取学期信息
 module.exports.semesterinfo = async (ctx, next) => {
   let question = require('../module/app-vpn/semester-info')
   await question(ctx.request.query, request)
-  .then(res => ctx.response.body = res)
-  .catch(err => ctx.response.body = err)
+    .then(res => ctx.response.body = res)
+    .catch(err => ctx.response.body = err)
 }
 

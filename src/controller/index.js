@@ -112,7 +112,7 @@ module.exports.course_search = async (ctx, next) => {
 // 班级同学列表，仅app
 module.exports.classlist = async (ctx, next) => {
   if (config.emergency) {
-    return await webVpnController.course_search(ctx, next);
+    return await appVpnController.classlist(ctx, next);
   }
   switch (ctx.request.query.target) {
     case 'appvpn':

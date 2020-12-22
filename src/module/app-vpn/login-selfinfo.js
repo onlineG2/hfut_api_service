@@ -1,7 +1,7 @@
 // 登录、获取个人信息
 
 module.exports = (query, request) => {
-  let { username, password, vpnTicket, vpnTicket } = query
+  let { username, password, vpnTicket } = query
   password = password ? password : ''
   let data = {
     username: username,

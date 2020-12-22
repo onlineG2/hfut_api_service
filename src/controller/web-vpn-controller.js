@@ -116,7 +116,7 @@ module.exports.login = async (ctx, next) => {
         }
 
       })
-      .catch(err => ctx.response.body = err)
+      .catch(err => ctx.response.body = { success: false, err })
   }
 
 }
@@ -128,6 +128,14 @@ module.exports.schedule = async (ctx, next) => {
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
     .then(async scheduleRes => {
+      // 检测key是否正常
+      if (typeof scheduleRes.body === 'string') {
+        return ctx.response.body = {
+          success: false,
+          msg: 'key失效',
+          ...scheduleRes,
+        }
+      }
       const { timeTableLayoutId } = scheduleRes.body
       if (!timeTableLayoutId) {
         scheduleRes.body = {}
@@ -139,6 +147,8 @@ module.exports.schedule = async (ctx, next) => {
         .then(timeTableRes => {
           scheduleRes.body.courseId2CourseTextbookStat = {}
           ctx.response.body = {
+            success: true,
+            msg: '正常',
             ...scheduleRes,
             body: {
               ...scheduleRes.body,
@@ -149,7 +159,7 @@ module.exports.schedule = async (ctx, next) => {
           }
         })
     })
-    .catch(err => ctx.response.body = err)
+    .catch(err => ctx.response.body = { success: false, error: true, msg: err })
 }
 
 // 获取成绩列表。返回为html
@@ -314,25 +324,20 @@ module.exports.course_search = async (ctx, next) => {
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
     .then(res => {
-      // if (res.headers['set-cookie']) {
-      //   ctx.response.body = {
-      //     success: false,
-      //     msg: 'key失效',
-      //     data: null,
-      //   }
-      // } else {
-      //   ctx.response.body = {
-      //     success: true,
-      //     msg: '成功',
-      //     data: {
-      //       ...res.body,
-      //     },
-      //   }
-      // }
-      ctx.response.body = {
-        success: true,
-        msg: '成功',
-        ...res,
+      if (typeof res.body === 'string') {
+        return ctx.response.body = {
+          success: false,
+          msg: 'key失效',
+          data: null,
+        }
+      } else {
+        return ctx.response.body = {
+          success: true,
+          msg: '成功',
+          data: {
+            ...res.body,
+          },
+        }
       }
     })
     .catch(err => ctx.response.body = err)

@@ -28,8 +28,6 @@ module.exports.login = async (ctx, next) => {
             }
           }
           else {
-            console.log('请求失败！')
-            console.log(res)
             ctx.response.body = {
               success: false,
               msg: res.body.message
@@ -37,7 +35,7 @@ module.exports.login = async (ctx, next) => {
           }
         })
     })
-    .catch(err => ctx.response.body = err)
+    .catch(err => ctx.response.body = { success: false, err })
 }
 
 // 获取课表
@@ -47,6 +45,14 @@ module.exports.schedule = async (ctx, next) => {
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
     .then(async scheduleRes => {
+      // 检测key是否正常
+      if (typeof scheduleRes.body === 'string') {
+        return ctx.response.body = {
+          success: false,
+          msg: 'key失效',
+          ...scheduleRes,
+        }
+      }
       const { timeTableLayoutId } = scheduleRes.body
       if (!timeTableLayoutId) {
         scheduleRes.body = {}
@@ -61,9 +67,10 @@ module.exports.schedule = async (ctx, next) => {
             if (timeTableRes.body.result) {
               i = 20
             }
-            // console.log(timeTableRes.body.result)
             scheduleRes.body.courseId2CourseTextbookStat = {}
             ctx.response.body = {
+              success: true,
+              msg: '正常',
               ...scheduleRes,
               body: {
                 ...scheduleRes.body,
@@ -76,7 +83,7 @@ module.exports.schedule = async (ctx, next) => {
       }
 
     })
-    .catch(err => ctx.response.body = err)
+    .catch(err => ctx.response.body = { success: false, error: true, msg: err })
 }
 
 
@@ -87,21 +94,21 @@ module.exports.scorelist = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-  .then(res => {
-    if (res.body.indexOf('登入页面') !== -1) {
-      return ctx.response.body = {
-        success: false,
-        msg: 'key失效',
-        scorelist: [],
+    .then(res => {
+      if (res.body.indexOf('登入页面') !== -1) {
+        return ctx.response.body = {
+          success: false,
+          msg: 'key失效',
+          scorelist: [],
+        }
+      } else {
+        return ctx.response.body = {
+          success: true,
+          msg: '成功',
+          scorelist: cheerioModule.scorelist(res.body),
+        }
       }
-    } else {
-      return ctx.response.body = {
-        success: true,
-        msg: '成功',
-        scorelist: cheerioModule.scorelist(res.body),
-      }
-    }
-  })
+    })
     .catch(err => ctx.response.body = err)
 }
 
@@ -189,22 +196,22 @@ module.exports.course_search = async (ctx, next) => {
   let studentId = await getStudentId(ctx.request.query)
   ctx.request.query.dataId = studentId
   await question(ctx.request.query, request)
-  .then(res => {
-    if (typeof res.body === 'string') {
-      return ctx.response.body = {
-        success: false,
-        msg: 'key失效',
-        data: null,
+    .then(res => {
+      if (typeof res.body === 'string') {
+        return ctx.response.body = {
+          success: false,
+          msg: 'key失效',
+          data: null,
+        }
+      } else {
+        return ctx.response.body = {
+          success: true,
+          msg: '成功',
+          data: {
+            ...res.body,
+          },
+        }
       }
-    } else {
-      return ctx.response.body = {
-        success: true,
-        msg: '成功',
-        data: {
-          ...res.body,
-        },
-      }
-    }
-  })
+    })
     .catch(err => ctx.response.body = err)
 }
