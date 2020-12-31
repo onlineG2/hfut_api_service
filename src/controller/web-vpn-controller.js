@@ -38,6 +38,7 @@ const getVpnTicket = async (ctx) => {
   await vertifyWengine(request)
     .then(res => {
       // console.log(res.headers['set-cookie'][0].split('=')[1])
+      // console.log(res)
       if (res.headers['set-cookie']) {
         ticket = res.headers['set-cookie'][0].split('=')[1].split(';')[0]
         // console.log(ticket)
@@ -93,6 +94,7 @@ module.exports.login = async (ctx, next) => {
                 res.studentId = await getStudentId(res)
                 delete res.headers
                 delete res.body
+                res.key = ticket
                 console.log('vpn登陆正常，通行ticket：' + ticket)
 
                 // 执行autoSave

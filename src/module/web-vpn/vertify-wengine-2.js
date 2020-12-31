@@ -12,7 +12,7 @@ module.exports = (request) => {
   
   return request({
     method: 'post',
-    url: 'https://vpn.hfut.edu.cn/do-login',
+    url: 'https://webvpn.hfut.edu.cn/do-login',
     data: data,
     contentType: 'application/x-www-form-urlencoded'
   })

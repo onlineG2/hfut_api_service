@@ -5,7 +5,7 @@ const config = {
   autoSave: true,
 
   // 紧急模式（学校封网）
-  emergency: false,
+  emergency: true,
 
 }
 

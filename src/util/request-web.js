@@ -19,7 +19,7 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
     settings.params = data
   }
 
-  // console.log(settings)
+  console.log(settings)
 
   await axios(settings)
     .then(res => {
@@ -30,7 +30,7 @@ const createRequest = async ({ method, url, data, cookies = '', redirect = true,
       if (cookies.indexOf('SESSION') !== -1) {
         answer.key = cookies.split('SESSION=')[1].split(';')[0]
       } else if (cookies.indexOf('wengine_vpn_ticketvpn_hfut_edu_cn') !== -1) {
-        answer.key = cookies.split('wengine_vpn_ticketvpn_hfut_edu_cn=')[1].split(';')[0]
+        answer.key = cookies.split('wengine_vpn_ticketwebvpn_hfut_edu_cn=')[1].split(';')[0]
       }
       console.log(res.status)
     })
