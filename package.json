@@ -1,0 +1,22 @@
+{
+  "name": "spider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "crypto-js": "^4.0.0",
+    "koa": "^2.13.0",
+    "koa-route": "^3.2.0",
+    "mysql2": "^2.1.0",
+    "request": "^2.88.2",
+    "sequelize": "^6.3.5"
+  }
+}
